@@ -8,6 +8,6 @@ public class HealthcareAppointmentManagementSystemApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HealthcareAppointmentManagementSystemApplication.class, args);
+		System.out.print("Hello");
 	}
-
 }
