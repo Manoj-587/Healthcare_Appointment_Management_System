@@ -14,4 +14,8 @@ public class PatientService {
     public Patient createPatient(Patient patient) {
         return patientRepository.save(patient);
     }
+
+    public Patient getPatientById(int id) {
+        return patientRepository.findById(id).orElse(null);
+    }
 }
