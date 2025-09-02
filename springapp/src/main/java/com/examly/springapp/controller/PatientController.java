@@ -2,6 +2,7 @@ package com.examly.springapp.controller;
 
 import com.examly.springapp.model.Patient;
 import com.examly.springapp.service.PatientService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,14 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
-    @PostMapping("insertUserDetails")
+    @PostMapping
     public Patient createPatient(@RequestBody Patient patient) {
         return patientService.createPatient(patient);
     }
 
-    @GetMapping("getUserDetails/{id}")
-    public Patient getPatientById(@PathVariable int id) {
-        return patientService.getPatientById(id);
+    @GetMapping
+    public List<Patient> getPatients() {
+        return patientService.getAllPatient();
     }
+
 }

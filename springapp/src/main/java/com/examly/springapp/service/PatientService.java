@@ -2,6 +2,9 @@ package com.examly.springapp.service;
 
 import com.examly.springapp.model.Patient;
 import com.examly.springapp.repository.PatientRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,7 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
-    public Patient getPatientById(int id) {
-        return patientRepository.findById(id).orElse(null);
+    public List<Patient> getAllPatient() {
+        return patientRepository.findAll();
     }
 }
