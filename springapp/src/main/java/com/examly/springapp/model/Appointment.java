@@ -3,6 +3,7 @@ package com.examly.springapp.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -30,11 +31,13 @@ public class Appointment {
     private String reason;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private Status status; // e.g., "Scheduled", "Completed", "Cancelled"
 
     public enum Status {
         SCHEDULED,
         COMPLETED,
-        CANCELLED
+        CANCELLED,
+        REQUESTED
     }
 }
