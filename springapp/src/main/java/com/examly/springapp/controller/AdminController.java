@@ -1,4 +1,5 @@
 package com.examly.springapp.controller;
 
-public class AppointmentController {
+public class AdminController {
+
 }

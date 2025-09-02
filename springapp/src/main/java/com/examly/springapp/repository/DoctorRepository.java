@@ -1,10 +1,11 @@
 package com.examly.springapp.repository;
 
-public class DoctorRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-    public void deleteAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteAll'");
-    }
+import com.examly.springapp.model.Doctor;
 
-}
+@Repository
+public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
+    
+} 
