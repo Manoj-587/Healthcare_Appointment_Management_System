@@ -23,4 +23,14 @@ public class PatientController {
         return patientService.getAllPatient();
     }
 
+    @PutMapping("{id}")
+    public Patient updatePatient(@PathVariable int id ,@RequestBody Patient patient) {
+        return patientService.updatePatient(id, patient);
+    }
+
+    @DeleteMapping("{id}")
+    public String deletePatient(@PathVariable int id) {
+        patientService.deletePatient(id);
+        return "Patient with id " + id + " deleted successfully";
+    }
 }
