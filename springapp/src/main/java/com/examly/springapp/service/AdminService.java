@@ -36,7 +36,7 @@ public class AdminService {
         } else {
             throw new RuntimeException("Admin with id " + id + " not found");
         }
-        return "Admin with id " + id + " deleted successfully.";;
+        return "Admin with id " + id + " deleted successfully.";
     }
 
 }
