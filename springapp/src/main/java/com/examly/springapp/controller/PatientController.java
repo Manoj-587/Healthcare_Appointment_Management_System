@@ -2,6 +2,9 @@ package com.examly.springapp.controller;
 
 import com.examly.springapp.model.Patient;
 import com.examly.springapp.service.PatientService;
+
+import jakarta.validation.Valid;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +17,7 @@ public class PatientController {
     private PatientService patientService;
 
     @PostMapping
-    public Patient createPatient(@RequestBody Patient patient) {
+    public Patient createPatient(@Valid @RequestBody Patient patient) {
         return patientService.createPatient(patient);
     }
 
@@ -24,7 +27,7 @@ public class PatientController {
     }
 
     @PutMapping("{id}")
-    public Patient updatePatient(@PathVariable int id ,@RequestBody Patient patient) {
+    public Patient updatePatient(@PathVariable int id ,@Valid @RequestBody Patient patient) {
         return patientService.updatePatient(id, patient);
     }
 

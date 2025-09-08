@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.examly.springapp.model.Appointment;
 import com.examly.springapp.service.AppointmentService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/appointments")
 public class AppointmentController {
@@ -23,7 +25,7 @@ public class AppointmentController {
     private AppointmentService appointmentService;
 
     @PostMapping
-    public Appointment createAppointment(@RequestBody Appointment appointment) {
+    public Appointment createAppointment(@Valid @RequestBody Appointment appointment) {
         return appointmentService.createAppointment(appointment);
     }
 
@@ -33,7 +35,7 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}")
-    public Appointment updateAppointment(@PathVariable int id, @RequestBody Appointment appointment) {
+    public Appointment updateAppointment(@PathVariable int id,@Valid @RequestBody Appointment appointment) {
         return appointmentService.updateAppointmentById(id, appointment);
     }    
 

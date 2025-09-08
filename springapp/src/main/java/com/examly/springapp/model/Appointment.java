@@ -12,6 +12,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -23,10 +26,14 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
+    @NotNull(message = "Patient is mandatory")
     private Patient patient;
     @ManyToOne
+    @NotNull(message = "Doctor is mandatory")
     private Doctor doctor;
+    @FutureOrPresent(message = "Appointment date must be today or in the future")
     private LocalDate appointmentDate;
+    @NotNull(message = "Appointment time is mandatory")
     private LocalTime appointmentTime;
     private String reason;
 

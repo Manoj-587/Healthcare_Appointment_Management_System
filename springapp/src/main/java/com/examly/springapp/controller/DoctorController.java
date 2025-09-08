@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.examly.springapp.model.Doctor;
 import com.examly.springapp.service.DoctorService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/doctors")
 public class DoctorController {
@@ -23,7 +25,7 @@ public class DoctorController {
     private DoctorService doctorService;
 
     @PostMapping
-    public Doctor createDoctor(@RequestBody Doctor doctor) {
+    public Doctor createDoctor(@Valid @RequestBody Doctor doctor) {
         return doctorService.createDoctor(doctor);
     }
     
@@ -33,7 +35,7 @@ public class DoctorController {
     }
 
     @PutMapping("/{id}")
-    public Doctor updateDoctor(@PathVariable int id, @RequestBody Doctor doctor) {
+    public Doctor updateDoctor(@PathVariable int id, @Valid @RequestBody Doctor doctor) {
         return doctorService.updateDoctorById(id, doctor);
     }
 

@@ -1,11 +1,14 @@
 package com.examly.springapp.service;
 
 import com.examly.springapp.model.Patient;
+import com.examly.springapp.repository.AppointmentRepository;
 import com.examly.springapp.repository.PatientRepository;
+import com.examly.springapp.config.AppConfig;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,8 +16,13 @@ public class PatientService {
 
     @Autowired
     private PatientRepository patientRepository;
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+    // @Autowired
+    // private PasswordEncoder passwordEncoder;
 
     public Patient createPatient(Patient patient) {
+        // patient.setPassword(passwordEncoder.encode(patient.getPassword()));
         return patientRepository.save(patient);
     }
 
@@ -37,6 +45,9 @@ public class PatientService {
     public String deletePatient(int id) {
         if(!patientRepository.existsById(id)) {
             throw new RuntimeException("Patient with id " + id + " not found");
+        }
+        if(appointmentRepository.existsByPatientId(id)) {
+            throw new RuntimeException("Cannot delete patient with id " + id + " as there are existing appointments associated.");
         }
         patientRepository.deleteById(id);
         return "Patient with id " + id + " deleted successfully";
