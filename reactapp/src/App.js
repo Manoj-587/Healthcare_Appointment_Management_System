@@ -1,10 +1,13 @@
 import React from 'react'
-import RegisterPatient from './components/PatientReg';
+// import RegisterPatient from './components/PatientRegister';
+import LoginPatient from './components/LoginPatient';
 
 const App = () => {
   return (
     <div>
-        <RegisterPatient />
+        {/* <RegisterPatient /> */}
+        <LoginPatient/>
+
     </div>
   )
 }

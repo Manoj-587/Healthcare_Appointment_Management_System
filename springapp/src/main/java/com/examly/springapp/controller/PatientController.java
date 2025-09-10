@@ -16,24 +16,23 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
+    //crud operations
     @PostMapping
     public Patient createPatient(@Valid @RequestBody Patient patient) {
         return patientService.createPatient(patient);
     }
-
     @GetMapping
     public List<Patient> getPatients() {
         return patientService.getAllPatient();
     }
-
     @PutMapping("{id}")
     public Patient updatePatient(@PathVariable int id ,@Valid @RequestBody Patient patient) {
         return patientService.updatePatient(id, patient);
     }
-
     @DeleteMapping("{id}")
     public String deletePatient(@PathVariable int id) {
         patientService.deletePatient(id);
         return "Patient with id " + id + " deleted successfully";
     }
+
 }

@@ -1,9 +1,12 @@
 package com.examly.springapp.service;
 
+import com.examly.springapp.dto.PatientLogin;
+import com.examly.springapp.exception.PatientInvalidCredentialException;
+import com.examly.springapp.exception.PatientNotFoundException;
 import com.examly.springapp.model.Patient;
 import com.examly.springapp.repository.AppointmentRepository;
 import com.examly.springapp.repository.PatientRepository;
-import com.examly.springapp.config.AppConfig;
+// import com.examly.springapp.config.AppConfig;
 
 import java.util.List;
 
@@ -63,5 +66,22 @@ public class PatientService {
             throw new RuntimeException("Patient with phone number " + patient.getPhoneNumber() + " already exists");
         }
         return patientRepository.save(patient);
+    }
+
+    //login patient
+    public Patient loginPatient(PatientLogin patientLogin) throws PatientNotFoundException, PatientInvalidCredentialException {
+        Patient patient;
+        if(patientRepository.existsByEmail(patientLogin.getEmailOrPhone())) {
+            patient = patientRepository.findByEmail(patientLogin.getEmailOrPhone());
+        } else if(patientRepository.existsByPhoneNumber(patientLogin.getEmailOrPhone())) {
+            patient = patientRepository.findByPhoneNumber(patientLogin.getEmailOrPhone());
+        } else {
+            throw new PatientNotFoundException("Patient with given email or phone number does not exist");
+        }
+
+        if(!patient.getPassword().equals(patientLogin.getPassword())) {
+            throw new PatientInvalidCredentialException("Invalid password");
+        }
+        return patient;
     }
 }
