@@ -3,6 +3,7 @@ package com.examly.springapp.service;
 import com.examly.springapp.dto.PatientLogin;
 import com.examly.springapp.exception.PatientInvalidCredentialException;
 import com.examly.springapp.exception.PatientNotFoundException;
+import com.examly.springapp.model.Appointment;
 import com.examly.springapp.model.Patient;
 import com.examly.springapp.repository.AppointmentRepository;
 import com.examly.springapp.repository.PatientRepository;
@@ -19,20 +20,18 @@ public class PatientService {
 
     @Autowired
     private PatientRepository patientRepository;
-    @Autowired
-    private AppointmentRepository appointmentRepository;
     // @Autowired
     // private PasswordEncoder passwordEncoder;
-
+    
     public Patient createPatient(Patient patient) {
         // patient.setPassword(passwordEncoder.encode(patient.getPassword()));
         return patientRepository.save(patient);
     }
-
+    
     public List<Patient> getAllPatient() {
         return patientRepository.findAll();
     }
-
+    
     public Patient updatePatient(int id, Patient patient) {
         if(!patientRepository.existsById(id)) {
             throw new RuntimeException("Patient with id " + id + " not found");
@@ -44,7 +43,7 @@ public class PatientService {
         existingPatient.setPhoneNumber(patient.getPhoneNumber());
         return patientRepository.save(existingPatient);
     }
-
+    
     public String deletePatient(int id) {
         if(!patientRepository.existsById(id)) {
             throw new RuntimeException("Patient with id " + id + " not found");
@@ -55,7 +54,7 @@ public class PatientService {
         patientRepository.deleteById(id);
         return "Patient with id " + id + " deleted successfully";
     }
-
+    
     //register patient
     public Patient registerPatient(Patient patient) {
         // patient.setPassword(passwordEncoder.encode(patient.getPassword()));
@@ -67,7 +66,7 @@ public class PatientService {
         }
         return patientRepository.save(patient);
     }
-
+    
     //login patient
     public Patient loginPatient(PatientLogin patientLogin) throws PatientNotFoundException, PatientInvalidCredentialException {
         Patient patient;
@@ -78,10 +77,16 @@ public class PatientService {
         } else {
             throw new PatientNotFoundException("Patient with given email or phone number does not exist");
         }
-
+        
         if(!patient.getPassword().equals(patientLogin.getPassword())) {
             throw new PatientInvalidCredentialException("Invalid password");
         }
         return patient;
+    }
+    
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+    public List<Appointment> getAppointmentsByPatientId(int patientId) {
+        return appointmentRepository.findByPatientId(patientId);
     }
 }

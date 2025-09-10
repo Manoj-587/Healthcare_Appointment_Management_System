@@ -1,15 +1,19 @@
-import React from 'react'
-// import RegisterPatient from './components/PatientRegister';
-import LoginPatient from './components/LoginPatient';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoginPatient from "./components/LoginPatient";
+import RegisterPatient from "./components/RegisterPatient";
+import PatientDashboard from "./components/PatientDashboard";
 
-const App = () => {
+function App() {
   return (
-    <div>
-        {/* <RegisterPatient /> */}
-        <LoginPatient/>
-
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPatient />} />
+        <Route path="/register" element={<RegisterPatient />} />
+        <Route path="/dashboard" element={<PatientDashboard />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

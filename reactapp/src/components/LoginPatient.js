@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { loginPatient } from "../utils/api";
 
 function LoginPatient() {
   const [form, setForm] = useState({ emailOrPhone: "", password: "" });
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -14,6 +16,9 @@ function LoginPatient() {
     try {
       const data = await loginPatient(form);
       setMessage(`Welcome back, ${data.name}`);
+
+      // Redirect to dashboard and pass patient info
+      navigate("/dashboard", { state: { patient: data } });
     } catch (error) {
       setMessage(error.message || "Login failed");
     }
