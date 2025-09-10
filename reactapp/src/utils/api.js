@@ -26,7 +26,7 @@ export async function loginPatient(credentials) {
 
 // getPatient
 
-const patientUrl = "http://localhost:8080/api/patient"
+const patientUrl = "http://localhost:8080/api/patients"
 
 export async function fetchPatientAppointments(patientId) {
     const res = await fetch(`${patientUrl}/${patientId}`);
