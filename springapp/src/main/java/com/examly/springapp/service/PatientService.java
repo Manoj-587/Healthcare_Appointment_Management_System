@@ -52,4 +52,16 @@ public class PatientService {
         patientRepository.deleteById(id);
         return "Patient with id " + id + " deleted successfully";
     }
+
+    //register patient
+    public Patient registerPatient(Patient patient) {
+        // patient.setPassword(passwordEncoder.encode(patient.getPassword()));
+        if(patientRepository.existsByEmail(patient.getEmail())) {
+            throw new RuntimeException("Patient with email " + patient.getEmail() + " already exists");
+        }
+        if(patientRepository.existsByPhoneNumber(patient.getPhoneNumber())) {
+            throw new RuntimeException("Patient with phone number " + patient.getPhoneNumber() + " already exists");
+        }
+        return patientRepository.save(patient);
+    }
 }
