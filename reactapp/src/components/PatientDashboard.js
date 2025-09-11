@@ -32,7 +32,14 @@ function PatientDashboard() {
   return (
     <div style={{ maxWidth: "800px", margin: "20px auto" }}>
       <h2>Welcome, {patient.name}</h2>
-      <button style={{ marginBottom: "20px" }}>Book New Appointment</button>
+      {/* <button style={{ marginBottom: "20px" }}>Book New Appointment</button> */}
+      <button
+        style={{ marginBottom: "20px" }}
+        onClick={() => navigate("/new-appointment", { state: { patient } })}
+      >
+        Book New Appointment
+      </button>
+
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -52,13 +59,14 @@ function PatientDashboard() {
           <tbody>
             {appointments.map((appt) => (
               <tr key={appt.id}>
-                <td>{appt.doctorName}</td>
-                <td>{appt.date}</td>
-                <td>{appt.time}</td>
+                <td>{appt.doctor?.name} ({appt.doctor?.specialization})</td>
+                <td>{appt.appointmentDate}</td>
+                <td>{appt.appointmentTime}</td>
                 <td>{appt.status}</td>
               </tr>
             ))}
           </tbody>
+
         </table>
       )}
     </div>
