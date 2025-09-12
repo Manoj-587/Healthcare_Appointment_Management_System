@@ -2,6 +2,7 @@ package com.examly.springapp.service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
@@ -53,12 +54,6 @@ public class AppointmentService {
         return appointmentRepository.findByPatientId(patientId);
     }
 
-    public void cancelAppointment(int id) {
-        Appointment appointment = appointmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Appointment with id " + id + " not found"));
-        appointment.setStatus(Appointment.Status.CANCELLED);
-        appointmentRepository.save(appointment);    
-    }
 
     //date and time validation 
     @Autowired
@@ -112,4 +107,5 @@ public class AppointmentService {
             throw new IllegalArgumentException("Selected time is not within doctor's available slots on " + dayName);
         }
     }
+
 }

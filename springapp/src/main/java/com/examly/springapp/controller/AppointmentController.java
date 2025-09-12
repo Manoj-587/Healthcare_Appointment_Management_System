@@ -1,8 +1,11 @@
 package com.examly.springapp.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examly.springapp.dto.AppointmentRequest;
@@ -28,8 +32,9 @@ public class AppointmentController {
     private AppointmentService appointmentService;
 
     // @PostMapping
-    // public Appointment createAppointment(@Valid @RequestBody Appointment appointment) {
-    //     return appointmentService.createAppointment(appointment);
+    // public Appointment createAppointment(@Valid @RequestBody Appointment
+    // appointment) {
+    // return appointmentService.createAppointment(appointment);
     // }
 
     @GetMapping
@@ -38,9 +43,9 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}")
-    public Appointment updateAppointment(@PathVariable int id,@Valid @RequestBody Appointment appointment) {
+    public Appointment updateAppointment(@PathVariable int id, @Valid @RequestBody Appointment appointment) {
         return appointmentService.updateAppointmentById(id, appointment);
-    }    
+    }
 
     @DeleteMapping("/{id}")
     public String deleteAppointment(@PathVariable int id) {
@@ -49,13 +54,7 @@ public class AppointmentController {
 
     @GetMapping("/patient/{patientId}")
     public List<Appointment> getAppointmentsByPatient(@PathVariable Integer patientId) {
-        return appointmentService.getAppointmentsByPatient(patientId);  
-    }
-
-    @PutMapping("/cancel/{id}")
-    public String cancelAppointment(@PathVariable int id) {
-        appointmentService.cancelAppointment(id);
-        return "Appointment with id " + id + " cancelled successfully.";
+        return appointmentService.getAppointmentsByPatient(patientId);
     }
 
     @PostMapping
@@ -65,7 +64,11 @@ public class AppointmentController {
                 request.getDoctorId(),
                 request.getAppointmentDate(),
                 request.getAppointmentTime(),
-                request.getReason()
-        );
+                request.getReason());
     }
+
+    
 }
+
+
+
