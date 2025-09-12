@@ -10,11 +10,7 @@ import com.examly.springapp.model.Appointment;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 
-    long countByDoctorId(int id);
-
-    boolean existsByPatientId(int id);
-
-    List<Appointment> findByPatientId(int patientId);
-
-    
+    List<Appointment> findByPatientId(Integer patientId);
+    List<Appointment> findByDoctorId(Integer doctorId);
+    long countByStatus(Appointment.Status status);
 } 

@@ -1,44 +1,67 @@
 package com.examly.springapp.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import com.examly.springapp.model.Admin;
+import com.examly.springapp.dto.RegisterRequest;
+import com.examly.springapp.model.Appointment;
+import com.examly.springapp.model.Doctor;
 import com.examly.springapp.service.AdminService;
+import com.examly.springapp.service.AppointmentService;
+
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/admins")
+@RequestMapping("/api/admin")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
+    
+    @Autowired
+    private AppointmentService appointmentService;
 
-    @PostMapping
-    public Admin createAdmin(@RequestBody Admin admin) {
-        return adminService.createAdmin(admin);
+    @PostMapping("/doctors")
+    public ResponseEntity<Doctor> createDoctor(@Valid @RequestBody RegisterRequest request) {
+        try {
+            Doctor doctor = adminService.createDoctor(request);
+            return ResponseEntity.ok(doctor);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @GetMapping
-    public List<Admin> getAdmins() {
-        return adminService.getAllAdmins();
+    @GetMapping("/doctors")
+    public ResponseEntity<List<Doctor>> getAllDoctors() {
+        List<Doctor> doctors = adminService.getAllDoctors();
+        return ResponseEntity.ok(doctors);
     }
 
-    @PutMapping("/{id}")
-    public Admin updateAdmin(@PathVariable int id, @RequestBody Admin admin) {
-        return adminService.updateAdmin(id,admin);
+    @PutMapping("/doctors/{doctorId}")
+    public ResponseEntity<Doctor> updateDoctor(@PathVariable Integer doctorId, 
+            @Valid @RequestBody Doctor doctorUpdate) {
+        try {
+            Doctor doctor = adminService.updateDoctor(doctorId, doctorUpdate);
+            return ResponseEntity.ok(doctor);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteAdmin(@PathVariable int id) {
-        return adminService.deleteAdmin(id);
+    @GetMapping("/dashboard/stats")
+    public ResponseEntity<Map<String, Object>> getDashboardStats() {
+        Map<String, Object> stats = adminService.getDashboardStats();
+        return ResponseEntity.ok(stats);
+    }
+
+    @GetMapping("/appointments")
+    public ResponseEntity<List<Appointment>> getAllAppointments() {
+        List<Appointment> appointments = appointmentService.getAllAppointments();
+        return ResponseEntity.ok(appointments);
     }
 }

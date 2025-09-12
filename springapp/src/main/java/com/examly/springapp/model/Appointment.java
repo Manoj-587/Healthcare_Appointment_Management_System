@@ -41,9 +41,10 @@ public class Appointment {
     private Status status; // e.g., "Scheduled", "Completed", "Cancelled"
 
     public enum Status {
-        SCHEDULED,
+        PENDING,
+        APPROVED,
+        REJECTED,
         COMPLETED,
-        CANCELLED,
-        REQUESTED
+        CANCELLED
     }
 }
